@@ -27,6 +27,10 @@ const albumSchema = new mongoose.Schema(
         ref: "Song", // Referencing the Song model
       },
     ],
+    releaseYear: {
+      type: Number,
+      required: true,
+    },
     description: {
       type: String,
       trim: true,

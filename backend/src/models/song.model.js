@@ -25,7 +25,7 @@ const songSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    coverImageUrl: {
+    imageUrl: {
       type: String,
       required: true,
     },
@@ -33,10 +33,6 @@ const songSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Album",
       // required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
     },
   },
   { timestamps: true }
