@@ -9,15 +9,21 @@ import adminRoutes from "./routes/admin.route.js";
 import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/admin.route.js";
 import statsRoutes from "./routes/stats.route.js";
-import { getTempFilename } from "express-fileupload/lib/utilities.js";
+import path from "path";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 const __dirname = path.resolve();
 const PORT = process.env.PORT || 5001; // Change from 5000 to 5001
-
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(clerkMiddleware()); //TODO::: will add auth to request
+app.use(clerkMiddleware()); //NOTE::: will add auth to request
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -42,3 +48,5 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
 });
+
+// TODO: SOCKET IO is left

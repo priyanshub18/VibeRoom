@@ -5,16 +5,16 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  
+
   color-scheme: dark;
-  
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   --radius: 0.625rem;
-  
+
   /* Dark theme only - Black and white */
   --background: #000000;
   --foreground: #ffffff;
@@ -34,14 +34,14 @@
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.15);
   --ring: #666666;
-  
+
   /* Chart colors in grayscale */
   --chart-1: #f2f2f2;
   --chart-2: #b3b3b3;
   --chart-3: #808080;
   --chart-4: #4d4d4d;
   --chart-5: #262626;
-  
+
   /* Sidebar */
   --sidebar: #121212;
   --sidebar-foreground: #ffffff;
@@ -65,10 +65,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+
+  
   color: var(--foreground);
   background-color: var(--background);
 }
