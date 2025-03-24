@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Loader } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { axiosInstance } from "@/lib/axios";
