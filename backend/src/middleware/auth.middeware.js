@@ -2,7 +2,6 @@ import { clerkClient } from "@clerk/express";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    console.log();
     if (!req.auth?.userId) {
       console.log("Sending shit from here");
       return res.status(401).json({ message: "Unauthorized" });

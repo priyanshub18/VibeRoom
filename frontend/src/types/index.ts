@@ -21,3 +21,12 @@ export interface Album {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface User {
+  _id: string;
+  fullName: string;
+  email: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}

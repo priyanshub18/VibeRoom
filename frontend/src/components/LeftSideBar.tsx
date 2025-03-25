@@ -7,14 +7,16 @@ import PlaylistSkeleton from "./skeletons/PlayListSkeleton";
 import { ScrollArea } from "./ui/scroll-area";
 import { useEffect } from "react";
 import { MusicStore, useMusicStore } from "@/stores/useMusicStore";
+import { useIndexColorStore } from "@/stores/useIndexColorStore";
 
 const LeftSideBar = () => {
   const { albums, fetchAlbums, isLoading } = useMusicStore() as MusicStore;
-
+  const { idx, colors, setIndex } = useIndexColorStore();
   useEffect(() => {
     // NOTE: Fetch data from the backend
     // NOTE: I'll use something like state management in this.
     fetchAlbums();
+    setIndex();
   }, [fetchAlbums]);
   console.log({ albums });
   return (
@@ -56,7 +58,7 @@ const LeftSideBar = () => {
       <div className='flex-1 rounded-lg bg-zinc-900 p-4'>
         <div className='flex items-center justify-between mb-4'>
           <div className='items-center flex text-white px-2 font-extrabold'>
-            <Library className='size-6 mr-2' />
+            <Library className={`size-6 mr-2 ${colors[idx]}`} />
             <span className='hidden md:inline text-lg font-extrabold'>P L A Y L I S T S</span>
           </div>
         </div>
@@ -70,7 +72,7 @@ const LeftSideBar = () => {
                   <Link key={album._id} to={`/albums/${album._id}`} className='p-2 hover:bg-zinc-800 rounded-md flex items-center gap-3 cursor-pointer'>
                     <img src={album.imageUrl} alt='PlaylistImg' className='size-12 rounded-md flex-shrink-0 object-cover' />
                     <div className='flex-1 min-w-0 hidden md:block'>
-                      <p className='text-md truncate font-semibold' >{album.title}</p>
+                      <p className='truncate font-semibold'>{album.title}</p>
                       <p className='truncate text-zinc-500 font-medium text-sm'>Album • {album.artist}</p>
                     </div>
                   </Link>

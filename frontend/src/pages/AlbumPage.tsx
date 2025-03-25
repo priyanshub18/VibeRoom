@@ -104,7 +104,7 @@ const AlbumPage = () => {
               <div
                 className='grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-8 py-3 text-sm 
                 text-white font-semibold bg-white/10
-                backdrop-blur-xl shadow-lg border border-white/10 rounded-md'
+                backdrop-blur-xl shadow-lg border border-white/10 rounded-sm'
               >
                 <div className='text-md text-white/90 flex items-center justify-center'>
                   <Hash className='h-5 w-5 text-green-400' />
