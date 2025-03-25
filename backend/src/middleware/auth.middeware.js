@@ -1,11 +1,16 @@
 import { clerkClient } from "@clerk/express";
 
 export const protectRoute = async (req, res, next) => {
-  if (!req.auth.userId) {
-    return res.status(401).json({ message: "Unauthorized" });
+  try {
+    console.log();
+    if (!req.auth?.userId) {
+      console.log("Sending shit from here");
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    next();
+  } catch (err) {
+    next(err); // ✅ Pass error to error-handling middleware
   }
-
-  next();
 };
 
 export const requireAdmin = async (req, res, next) => {
@@ -17,7 +22,6 @@ export const requireAdmin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-    next(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

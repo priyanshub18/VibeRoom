@@ -56,7 +56,6 @@
 a {
   font-weight: 500;
   color: #ffffff;
-  text-decoration: underline;
 }
 
 a:hover {
@@ -64,9 +63,8 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 12px;
 
-  
   color: var(--foreground);
   background-color: var(--background);
 }
@@ -97,3 +95,53 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+span {
+  font-weight: 500;
+}
+
+body {
+  --ease: cubic-bezier(0.2, 1, 0.35, 1);
+}
+
+/* button {
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  font-family: system-ui, sans-serif;
+  padding-inline: 60px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  position: relative;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  background-color: green !important;
+  inset: -2px;
+  clip-path: inset(calc(100% - 8px) 8px 8px 8px round 5px);
+  transition: clip-path 0.45s var(--ease);
+}
+
+button span {
+  display: block;
+  text-shadow: 0 2em 0 white;
+  transition: all 0.45s var(--ease);
+  position: relative;
+}
+button .container {
+  overflow: hidden;
+  padding-top: 16px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
+button:hover span {
+  transform: translateY(-2em);
+  color: transparent;
+}
+
+button:hover::before {
+  clip-path: inset(0 round 5px);
+} */

@@ -17,7 +17,7 @@ const albumSchema = new mongoose.Schema(
       enum: ["Rock", "Pop", "Jazz", "Hip-Hop", "Classical", "Electronic", "Other"],
       default: "Other",
     },
-    coverImageUrl: {
+    imageUrl: {
       type: String, // URL of the album cover image
       required: true,
     },

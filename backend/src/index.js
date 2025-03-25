@@ -7,7 +7,7 @@ import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import adminRoutes from "./routes/admin.route.js";
 import songRoutes from "./routes/song.route.js";
-import albumRoutes from "./routes/admin.route.js";
+import albumRoutes from "./routes/album.route.js";
 import statsRoutes from "./routes/stats.route.js";
 import path from "path";
 import cors from "cors";
@@ -44,6 +44,7 @@ app.use("/api/stats", statsRoutes);
 app.use((err, req, res, next) => {
   res.status(500).json({ message: process.env.NODE_ENV === "development" ? err.message : "Internal server error" });
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
