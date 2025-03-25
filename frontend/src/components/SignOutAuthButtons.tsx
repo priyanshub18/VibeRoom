@@ -1,4 +1,4 @@
-import { useSignIn } from "@clerk/clerk-react";
+import { GoogleOneTap, useSignIn } from "@clerk/clerk-react";
 import { Button } from "./ui/button";
 
 const SignOutAuthButtons = () => {
@@ -16,9 +16,18 @@ const SignOutAuthButtons = () => {
   }
 
   return (
-    <Button className='w-full text-white border-zinc-200 h-11' onClick={() => signInWithGoogle()}>
-      Continue With Google
-    </Button>
+    <button
+      className=' flex items-center justify-center space-x-2 
+        text-white bg-zinc-800 hover:bg-zinc-700 
+        border border-zinc-700 
+        h-11 rounded-md 
+        transition-all duration-200 
+        group'
+      onClick={signInWithGoogle}
+    >
+      <img src='/google.png' alt='' className='w-6 h-6 text-white filter brightness-125 hover:rotate-6 transition-transform' />
+      <span className="font-bold"> Continue With Google</span>
+    </button>
   );
 };
 

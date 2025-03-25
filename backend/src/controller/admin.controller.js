@@ -66,7 +66,7 @@ export const deleteSong = async (req, res, next) => {
     }
 
     await Song.findByIdAndDelete(id);
-    res.status(200).json({ message: "Song deleted successfully" });
+    return res.status(200).json({ message: "Song deleted successfully" });
   } catch (error) {
     console.error("Error on deleting the song: ", error);
     next(error);
@@ -88,7 +88,7 @@ export const createAlbum = async (req, res, next) => {
 
     await album.save();
 
-    res.status(201).json(album);
+    return res.status(201).json(album);
   } catch (err) {
     console.error("Error:", err);
     next(err);
@@ -100,7 +100,7 @@ export const deleteAlbum = async (req, res, next) => {
     const { id } = req.params;
     await Song.deleteMany({ albumId: id });
     await Album.findByIdAndDelete(id);
-    res.status(200).json({ message: "Album deleted successfully" });
+    return res.status(200).json({ message: "Album deleted successfully" });
   } catch (error) {
     console.error("Error on deleting the album: ", error);
     next(error);
@@ -108,5 +108,6 @@ export const deleteAlbum = async (req, res, next) => {
 };
 
 export const checkAdmin = async (req, res, next) => {
-  res.status(200).json({ message: "Admin Checked", admin: true });
+  console.log("checking whether it is reaching here or not");
+  return res.status(200).json({ message: "Admin Checked", admin: true });
 };

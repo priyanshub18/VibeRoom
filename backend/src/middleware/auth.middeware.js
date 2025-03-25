@@ -14,13 +14,32 @@ export const protectRoute = async (req, res, next) => {
 
 export const requireAdmin = async (req, res, next) => {
   try {
-    const user = await clerkClient.users.getUserById(req.auth.userId);
-    const isAdmin = process.env.ADMIN_EMAIL === user.primaryEmailAddress?.emailAddress;
-    if (!isAdmin) {
-      return res.status(403).json({ message: "Forbidden" }, { admin: false });
+    console.log("Checking if the user is reaching here or not: requireAdmin");
+
+    // Check if user is authenticated
+    if (!req.auth?.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
+
+    // Fetch user details
+    const user = await clerkClient.users.getUser(req.auth.userId);
+    if (!user || !user.primaryEmailAddress) {
+      return res.status(500).json({ message: "User data retrieval error" });
+    }
+
+    console.log("Checking user email:", user.primaryEmailAddress.emailAddress);
+
+    // Check if user is an admin
+    const isAdmin = process.env.ADMIN_EMAIL === user.primaryEmailAddress.emailAddress;
+    console.log("Checking if the user is admin:", isAdmin);
+
+    if (!isAdmin) {
+      return res.status(403).json({ message: "Forbidden", admin: false });
+    }
+
     next();
   } catch (error) {
+    console.error("Error in requireAdmin:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

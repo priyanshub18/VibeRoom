@@ -1,11 +1,12 @@
 import { useChatStore } from "@/stores/useChatStore";
 import { useUser } from "@clerk/clerk-react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { HeadphonesIcon, Music, Users, UsersIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { HeadphonesIcon, Music, UsersIcon } from "lucide-react";
+import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@/types";
 import { useIndexColorStore } from "@/stores/useIndexColorStore";
+import PlaylistSkeleton from "./skeletons/PlayListSkeleton";
 
 const FriendActivity = () => {
   const colors = ["text-blue-400", "text-red-400", "text-green-400", "text-yellow-400"];
@@ -20,15 +21,19 @@ const FriendActivity = () => {
     setIndex();
   }, [fetchUsers, user]);
   // console.log("USERS : " ,users);
+
+  // if (isLoading) {
+  //   return <PlaylistSkeleton />;
+  // }
   return (
     <div className='h-full bg-zinc-900 rounded-lg flex flex-col'>
       <div className='p-4 flex justify-between items-center border-b border-zinc-800'>
         <div className='flex items-center gap-2'>
           <UsersIcon className={`size-6 ${colors[idx]} shrink-0`} />
-          <h2 className='font-bold'>V I B E - C H E C K</h2>
+          <h2 className='font-bold text-lg'>V I B E - C H E C K</h2>
         </div>
       </div>
-
+      {isLoading && <PlaylistSkeleton />}
       {!user && (
         <div className='h-full flex flex-col items-center justify-center p-6 text-center space-y-4'>
           <div className='relative'>

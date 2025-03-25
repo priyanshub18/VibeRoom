@@ -2,7 +2,7 @@ import Album from "../models/album.model.js";
 
 export const getAllAlbums = async (req, res, next) => {
   try {
-    console.log(req.headers.authorization);
+    // console.log(req.headers.authorization);
     const albums = await Album.find();
     return res.status(200).json(albums);
   } catch (error) {

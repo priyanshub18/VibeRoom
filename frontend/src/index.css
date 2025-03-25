@@ -53,26 +53,26 @@
   --sidebar-ring: #666666;
 }
 
-a {
+/* a {
   font-weight: 500;
   color: #ffffff;
-}
+} */
 
-a:hover {
+/* a:hover {
   color: #d9d9d9;
-}
+} */
 
 body {
   margin: 12px;
-
+  overflow : hidden
   color: var(--foreground);
   background-color: var(--background);
 }
-
+/* 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
+} */
 
 button {
   /* border-radius: 8px; */
@@ -87,18 +87,18 @@ button {
   transition: border-color 0.25s;
 }
 
-button:hover {
+/* button:hover {
   border-color: #ffffff;
-}
+} */
 
-button:focus,
+/* button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  /* outline: 4px auto -webkit-focus-ring-color; */
+/* } */ 
 
-span {
+/* span {
   font-weight: 500;
-}
+} */
 
 body {
   --ease: cubic-bezier(0.2, 1, 0.35, 1);
