@@ -1,3 +1,4 @@
+import AudioPlayer from "@/components/AudioPlayer";
 import FriendActivity from "@/components/FriendActivity";
 import LeftSideBar from "@/components/LeftSideBar";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
@@ -8,8 +9,9 @@ const MainLayout = () => {
   return (
     <div className='h-screen bg-black text-white flex flex-col'>
       <ResizablePanelGroup direction='horizontal' className='flex-1 h-full overflow-hidden'>
+        <AudioPlayer />
         {/* //NOTE: left side */}
-        <ResizablePanel defaultSize={20} minSize={isMobile ? 0 : 10} maxSize={30}>
+        <ResizablePanel defaultSize={25} minSize={isMobile ? 0 : 10} maxSize={30}>
           <LeftSideBar />
         </ResizablePanel>
         <ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
