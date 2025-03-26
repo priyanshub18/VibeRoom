@@ -5,18 +5,16 @@ import cloudinary from "../lib/cloudinary.js";
 const uploadToCloudinary = async (file) => {
   try {
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
-      folder: "music-jamming",
-      use_filename: true,
       resource_type: "auto",
     });
     return result.secure_url;
   } catch (error) {
-    console.log(error);
-    throw new Error("Failed to upload file to Cloudinary");
+    console.log("Error in uploadToCloudinary", error);
+    throw new Error("Error uploading to cloudinary");
   }
 };
 
-export const createSong = async (res, req, next) => {
+export const createSong = async (req, res, next) => {
   try {
     if (!req.files || !req.files.audioFile || !req.files.imageFile) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -46,8 +44,9 @@ export const createSong = async (res, req, next) => {
       });
     }
 
-    res.status(201).json(song);
+    return res.status(201).json(song);
   } catch (error) {
+    console.log("i am from here getting some error from here and stuff")
     console.error("Error:", error);
     next(error);
   }
@@ -55,6 +54,7 @@ export const createSong = async (res, req, next) => {
 
 export const deleteSong = async (req, res, next) => {
   try {
+    console.log("Trying to delete a song from here: ");
     const { id } = req.params;
     const song = await Song.findById(id);
     if (song.albumId) {
@@ -66,8 +66,10 @@ export const deleteSong = async (req, res, next) => {
     }
 
     await Song.findByIdAndDelete(id);
+    console.log("Song is deleted Succesfully");
     return res.status(200).json({ message: "Song deleted successfully" });
   } catch (error) {
+
     console.error("Error on deleting the song: ", error);
     next(error);
   }
@@ -79,6 +81,9 @@ export const createAlbum = async (req, res, next) => {
     const { imageFile } = req.files;
 
     const imageUrl = await uploadToCloudinary(imageFile);
+    if(!imageUrl){
+      imageUrl = "https://placehold.co/600x400";
+    }
     const album = new Album({
       title,
       artist,

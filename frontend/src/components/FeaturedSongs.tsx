@@ -2,10 +2,14 @@ import { useMusicStore } from "@/stores/useMusicStore";
 import Song from "@/types";
 import React from "react";
 import { AlertTriangle, Loader2, RefreshCw } from "lucide-react";
+import PlayButton from "./PlayButton";
+import { usePlayerStore } from "@/stores/usePlayerStore";
+import { useShowPlayerStore } from "@/stores/useShowPlayer";
 
 const FeaturedSongs = () => {
   const { isLoading, featuredSongs, error } = useMusicStore();
-
+  const { currentSong, isPlaying, setCurrentSong, togglePlay } = usePlayerStore();
+  const {setClosePlayer}  = useShowPlayerStore();
   const handleRetry = () => {
     window.location.reload();
   };
@@ -50,17 +54,30 @@ const FeaturedSongs = () => {
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4'>
-      {featuredSongs.map((song) => (
-        <div key={song._id} className='hover:bg-gradient-to-br from-emerald-900/30 to-emerald-950/30 rounded-xl shadow-lg overflow-hidden transform transition-all hover:scale-[1.02] hover:shadow-2xl group cursor-pointer border border-white/10 hover:border-emerald-500'>
-          <div className='flex items-center p-4 space-x-4'>
-            <img src={song.imageUrl} alt={song.title} className='w-20 h-20 rounded-lg object-cover shadow-md group-hover:rotate-1 transition-transform' />
-            <div className='flex-1 overflow-hidden'>
-              <h3 className='text-lg font-bold text-emerald-100 truncate group-hover:text-white transition-colors'>{song.title}</h3>
-              <p className='text-sm text-white truncate group-hover:text-emerald-200'>{song.artist}</p>
+      {featuredSongs.map((song) => {
+        const handleFeaturedSongs = () => {
+          const isCurrentSongPlaying = currentSong?._id === song._id;
+          setClosePlayer()
+          if (isCurrentSongPlaying) {
+            togglePlay();
+          } else {
+            setCurrentSong(song);
+          }
+        };
+
+        return (
+          <div key={song._id} className='relative hover:bg-gradient-to-br from-emerald-900/30 to-emerald-950/30 rounded-xl shadow-lg overflow-hidden transform transition-all hover:scale-[1.02] hover:shadow-2xl group cursor-pointer border border-white/10 hover:border-emerald-500' onClick={() => handleFeaturedSongs()}>
+            <div className='flex items-center p-4 space-x-4'>
+              <img src={song.imageUrl} alt={song.title} className='w-20 h-20 rounded-lg object-cover shadow-md group-hover:rotate-1 transition-transform' />
+              <div className='flex-1 overflow-hidden'>
+                <h3 className='text-lg font-bold text-emerald-100 truncate group-hover:text-white transition-colors'>{song.title}</h3>
+                <p className='text-sm text-white truncate group-hover:text-emerald-200'>{song.artist}</p>
+              </div>
             </div>
+            <PlayButton song={song} />
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

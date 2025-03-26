@@ -30,3 +30,10 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Stats {
+  totalSongs: number;
+  totalAlbums: number;
+  totalArtists: number;
+  totalUsers: number;
+}

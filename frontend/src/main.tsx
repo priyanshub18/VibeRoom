@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import AuthProvider from "./provider/AuthProvider.tsx";
 import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner.tsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
       <AuthProvider>
         <BrowserRouter>
           <App />
+          <Toaster />
         </BrowserRouter>
       </AuthProvider>
     </ClerkProvider>

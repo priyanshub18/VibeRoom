@@ -4,8 +4,9 @@ import AlbumSkeleton from "@/components/skeletons/AlbumSkeleton";
 import { MusicStore, useMusicStore } from "@/stores/useMusicStore";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import { Button } from "@/components/ui/button";
-import { AudioWaveform, CalendarClock, Timer, PlayIcon, Divide, Music, Play, AudioLines } from "lucide-react";
+import { AudioWaveform, CalendarClock, Timer, PlayIcon, Divide, Music, Play, AudioLines, Pause } from "lucide-react";
 import { usePlayerStore } from "@/stores/usePlayerStore";
+import { useShowPlayerStore } from "@/stores/useShowPlayer";
 
 // Expanded Gradient Array with More Complex Gradients
 const gradients = [
@@ -19,6 +20,7 @@ const gradients = [
 ];
 
 const AlbumPage = () => {
+  const { setClosePlayer } = useShowPlayerStore();
   const { albumId } = useParams();
   const { fetchAlbum, currentAlbum, isLoading } = useMusicStore() as MusicStore;
   const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
@@ -28,17 +30,18 @@ const AlbumPage = () => {
 
   const handleAlbum = () => {
     if (!currentAlbum) return;
+    setClosePlayer();
     const isCurrentAlbumPlaying = currentAlbum?.songs.some((song) => song._id === currentSong?._id);
     if (isCurrentAlbumPlaying) {
       togglePlay();
     } else {
-      playAlbum(currentAlbum?.songs);
+      playAlbum(currentAlbum?.songs, 0);
     }
   };
 
-  const handlePlayAlbum = (index: number) => {
+  const handlePlaySong = (index: number) => {
     if (!currentAlbum) return;
-
+    setClosePlayer();
     const isCurrentSongPlaying = currentAlbum.songs[index]._id === currentSong?._id;
     if (isCurrentSongPlaying) {
       togglePlay();
@@ -63,7 +66,7 @@ const AlbumPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 2000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [isLoading]);
 
@@ -111,8 +114,8 @@ const AlbumPage = () => {
                 rounded-full px-8 py-4 flex items-center space-x-3
                 transition-all duration-500 ease-in-out'
               >
-                <PlayIcon className='w-6 h-6 group-hover:scale-110 transition-transform' />
-                <span className='font-bold'>Play Album</span>
+                {isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? <Pause className='h-7 w-7 text-black' /> : <Play className='h-7 w-7 text-black' />}
+                <span className='font-bold'>{isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? "Pause" : "Play"} Album</span>
                 <div
                   className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
                 opacity-0 group-hover:opacity-100 animate-[shimmer_2s_infinite]'
@@ -144,7 +147,7 @@ const AlbumPage = () => {
             </div>
           </div>
 
-          <ScrollArea.Root className='h-full relative z-20 overflow-hidden rounded-xl'>
+          <ScrollArea.Root className='h-full relative z-20 overflow-hidden'>
             <ScrollArea.Viewport className='w-full h-full'>
               <div className='divide-y divide-white/10'>
                 {currentAlbum?.songs.map((song, index) => {
@@ -152,7 +155,7 @@ const AlbumPage = () => {
                   return (
                     <div
                       key={song._id}
-                      onClick={() => handlePlayAlbum(index)}
+                      onClick={() => handlePlaySong(index)}
                       className='grid grid-cols-[auto_1fr_auto_auto] gap-4 px-6 py-4 
               hover:bg-white/10 transition-colors group cursor-pointer'
                     >
@@ -164,7 +167,7 @@ const AlbumPage = () => {
                         <>
                           <div className='flex items-center justify-center text-white/70 group-hover:text-white block group-hover:hidden'>{index + 1}</div>
                           <div className='flex items-center justify-center py-4 text-emerald-200  -ml-3 hidden group-hover:block'>
-                            <Play className="w-4 h-4" strokeWidth={3} />
+                            <Play className='w-4 h-4' strokeWidth={3} />
                           </div>
                         </>
                       )}

@@ -37,7 +37,7 @@ const LeftSideBar = () => {
   ];
 
   return (
-    <div className='h-full flex flex-col gap-4 p-4 bg-gradient-to-b from-zinc-950 to-black'>
+    <div className='h-full flex flex-col gap-4  bg-gradient-to-b from-zinc-950 to-black'>
       {/* Navigation Menu */}
       <div className='bg-zinc-900/60 backdrop-blur-xl rounded-2xl p-4 shadow-2xl'>
         <div className='space-y-2'>
@@ -46,11 +46,11 @@ const LeftSideBar = () => {
             if (item.requireSignedIn) {
               return (
                 <SignedIn key={item.id}>
-                  <NavItem {...item} isActive={activeMenu === item.id} onClick={() => setActiveMenu(item.id)} />
+                  <NavItem {...item} isActive={activeMenu === item.id} onClick={() => setActiveMenu(item.id) } colors={colors} idx={idx} />
                 </SignedIn>
               );
             }
-            return <NavItem key={item.id} {...item} isActive={activeMenu === item.id} onClick={() => setActiveMenu(item.id)} />;
+            return <NavItem key={item.id} {...item} isActive={activeMenu === item.id} onClick={() => setActiveMenu(item.id)} colors={colors} idx={idx} />;
           })}
         </div>
       </div>
@@ -84,7 +84,7 @@ const LeftSideBar = () => {
 };
 
 // Extracted NavItem Component
-const NavItem = ({ icon: Icon, label, path, isActive, onClick }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; path: string; isActive: boolean; onClick: () => void }) => (
+const NavItem = ({ icon: Icon, label, path, isActive, onClick , colors , idx }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; path: string; isActive: boolean; onClick: () => void  , colors: string[] , idx: number }) => (
   <Link
     to={path}
     onClick={onClick}
@@ -99,7 +99,7 @@ const NavItem = ({ icon: Icon, label, path, isActive, onClick }: { icon: React.C
   >
     <Icon
       className={`mr-3 size-6 
-      ${isActive ? "text-blue-400" : "group-hover:text-white/80"}
+      ${isActive ? colors[idx] : "group-hover:text-white/80"}
       transition-colors duration-300`}
     />
     <span className='hidden md:inline font-medium tracking-wider'>{label}</span>

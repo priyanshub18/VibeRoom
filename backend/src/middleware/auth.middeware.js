@@ -8,6 +8,7 @@ export const protectRoute = async (req, res, next) => {
     }
     next();
   } catch (err) {
+    console.log("Error from here only in checking for jsut the users igso");
     next(err); // ✅ Pass error to error-handling middleware
   }
 };
@@ -18,7 +19,7 @@ export const requireAdmin = async (req, res, next) => {
 
     // Check if user is authenticated
     if (!req.auth?.userId) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized " });
     }
 
     // Fetch user details

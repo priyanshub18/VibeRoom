@@ -69,7 +69,7 @@ export const getTrendingSongs = async (req, res, next) => {
     const songs = await Song.aggregate([
       {
         $sample: {
-          size: 4,
+          size: 8,
         },
       },
       {
