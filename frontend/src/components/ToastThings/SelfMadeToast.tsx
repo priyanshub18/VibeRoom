@@ -22,7 +22,7 @@ const toastVariants = {
   },
 };
 
-export const customToast = (message: string, type: keyof typeof toastVariants = "success") => {
+export const customToast = (message: string, type: keyof typeof toastVariants = "success" , duration : number = 2000) => {
   const variant = toastVariants[type];
 
   toast.custom(
@@ -54,7 +54,7 @@ export const customToast = (message: string, type: keyof typeof toastVariants = 
       </div>
     ),
     {
-      duration: 2000,
+      duration: duration,
       position: "bottom-right",
       classNames: {
         toast: "bg-transparent",

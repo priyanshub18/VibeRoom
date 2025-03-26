@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { HomeIcon, Library, MessageCircleMore, Disc3, Orbit, Waves } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
 import { SignedIn } from "@clerk/clerk-react";
 import PlaylistSkeleton from "./skeletons/PlayListSkeleton";
@@ -8,17 +8,23 @@ import { ScrollArea } from "./ui/scroll-area";
 import { useEffect, useState } from "react";
 import { MusicStore, useMusicStore } from "@/stores/useMusicStore";
 import { useIndexColorStore } from "@/stores/useIndexColorStore";
-import Song from "@/types";
+import { IsVibeCheckHiddenStore } from "@/stores/isVibeCheckHidden";
+// import { useIsVibeCheckHiddenStore } from "@/stores/isVibeCheckHidden";
+// import path from "path";
 
-const LeftSideBar = () => {
+const LeftSideBar = ({ isVibeCheckHidden, setIsVibeCheckHidden }: IsVibeCheckHiddenStore) => {
   const { albums, fetchAlbums, isLoading } = useMusicStore() as MusicStore;
   const { idx, colors, setIndex } = useIndexColorStore();
+  const [pathname, setPathname] = useState(window.location.pathname);
   const [activeMenu, setActiveMenu] = useState("home");
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchAlbums();
     setIndex();
-  }, [fetchAlbums]);
+    setPathname(window.location.pathname);
+    if (pathname === "/") setActiveMenu("home");
+    if (pathname === "/chat") setActiveMenu("messages");
+  }, [fetchAlbums, pathname, window.location.pathname]);
 
   const menuItems = [
     {
@@ -31,7 +37,7 @@ const LeftSideBar = () => {
       id: "messages",
       icon: MessageCircleMore,
       label: "Messages",
-      path: "/messages",
+      path: "/chat",
       requireSignedIn: true,
     },
   ];
@@ -46,7 +52,20 @@ const LeftSideBar = () => {
             if (item.requireSignedIn) {
               return (
                 <SignedIn key={item.id}>
-                  <NavItem {...item} isActive={activeMenu === item.id} onClick={() => setActiveMenu(item.id) } colors={colors} idx={idx} />
+                  <NavItem
+                    {...item}
+                    isActive={activeMenu === item.id}
+                    onClick={() => {
+                      setActiveMenu(item.id);
+                      if (item.id == "messages") setIsVibeCheckHidden(true);
+                      if(item.id == "home"){
+                        setIsVibeCheckHidden(false);
+                        navigate(0);
+                      }
+                    }}
+                    colors={colors}
+                    idx={idx}
+                  />
                 </SignedIn>
               );
             }
@@ -84,7 +103,7 @@ const LeftSideBar = () => {
 };
 
 // Extracted NavItem Component
-const NavItem = ({ icon: Icon, label, path, isActive, onClick , colors , idx }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; path: string; isActive: boolean; onClick: () => void  , colors: string[] , idx: number }) => (
+const NavItem = ({ icon: Icon, label, path, isActive, onClick, colors, idx }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; path: string; isActive: boolean; onClick: () => void; colors: string[]; idx: number }) => (
   <Link
     to={path}
     onClick={onClick}
@@ -133,7 +152,7 @@ const AlbumItem = ({ album }: { album: any }) => (
       <p className='truncate text-white/50 font-medium text-sm'>Album • {album.artist}</p>
     </div>
     <Waves
-      className='size-5 text-white/30 opacity-0 
+      className='hidden md:block size-5 text-white/30 opacity-0
       group-hover:opacity-100 transition-opacity'
     />
   </Link>

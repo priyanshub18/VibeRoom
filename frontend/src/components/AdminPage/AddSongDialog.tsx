@@ -91,7 +91,7 @@ const AddSongDialog = () => {
   return (
     <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
       <DialogTrigger asChild>
-        <Button className='flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-300 ease-in-out transform hover:scale-105'>
+        <Button className='mt-4 sm:mt-0 flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-300 ease-in-out transform hover:scale-105'>
           <Plus className='size-5' />
           Add Song
         </Button>

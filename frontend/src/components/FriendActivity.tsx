@@ -68,6 +68,7 @@ const FriendActivity = () => {
             {users.map((user: User, index) => (
               <UserActivityItem key={user._id || index} user={user} index={index} gradientColors={gradientColors} />
             ))}
+           
           </div>
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar orientation='vertical' className='flex select-none touch-none p-0.5 bg-black/10 transition-colors duration-[160ms] ease-out hover:bg-black/20 data-[orientation=vertical]:w-2.5'>

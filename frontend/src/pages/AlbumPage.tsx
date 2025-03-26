@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { AudioWaveform, CalendarClock, Timer, PlayIcon, Divide, Music, Play, AudioLines, Pause } from "lucide-react";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { useShowPlayerStore } from "@/stores/useShowPlayer";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Expanded Gradient Array with More Complex Gradients
 const gradients = [

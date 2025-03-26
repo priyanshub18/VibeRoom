@@ -8,6 +8,8 @@ import React, { useEffect, useState } from "react";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { toast } from "sonner";
 import { Music, MusicIcon } from "lucide-react";
+import { customToast } from "@/components/ToastThings/SelfMadeToast";
+import { dirname } from "path";
 
 const HomePage = () => {
   const { fetchFeaturedSongs, fetchTrendingSongs, fetchMadeForYouSongs, isLoading, featuredSongs, trendingSongs, madeForYouSongs } = useMusicStore();
@@ -45,15 +47,7 @@ const HomePage = () => {
       trendingSongs.length > 0
     ) {
       //
-      toast("Fetching songs...", {
-        duration: 2000, // 3 seconds
-        position: "bottom-right",
-        className: "bg-gradient-to-r from-emerald-600 to-emerald-900 text-white text-xl font-bold shadow-lg rounded-xl p-4 border border-emerald-400",
-        icon: <Music className='text-white w-5 h-5 animate-pulse' />, // Pulsing Music Icon
-        style: {
-          boxShadow: "0px 4px 10px rgba(0, 255, 127, 0.5)", // Soft Glow
-        },
-      });
+      customToast("Fetching songs...","info" , 1500);
       // initQueue([...featuredSongs, ...madeForYouSongs, ...trendingSongs]);
       setIsQueueInitialized(true); // Set flag to prevent multiple runs
     }
