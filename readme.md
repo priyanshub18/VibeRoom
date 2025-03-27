@@ -1,7 +1,7 @@
 # 🎵 VibeRoom - Music Streaming & Social Platform
 
 ## 📋 Project Overview
-
+![alt text](https://github.com/[priyanshub18]/[viberoom]/blob/[branch]/image.jpg?raw=true)
 VibeRoom is a comprehensive music streaming and social interaction platform that combines the best of music discovery, streaming, and real-time communication. Built with cutting-edge technologies, VibeRoom offers users a seamless experience to enjoy music, connect with friends, and explore new sounds.
 
 ## 🚀 Features
