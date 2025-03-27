@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
 import SignOutAuthButtons from "./SignOutAuthButtons";
@@ -7,15 +7,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/compon
 import { useState } from "react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { isAdmin } = useAuthStore();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <nav className='flex items-center justify-between px-4 py-3 sticky top-0 bg-zinc-900/80 backdrop-blur-lg shadow-lg border border-zinc-800 z-50 rounded-lg mb-3'>
-      <div className='flex items-center space-x-3'>
+      <button className='flex items-center space-x-3' onClick={() => navigate("/")}>
         <img src='/logo.svg' alt='Logo' className='w-8 h-8 text-white filter brightness-125 hover:rotate-6 transition-transform' />
-        <span className='text-xl font-bold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent'>VibeRoom</span>
-      </div>
+        <span className='text-2xl font-bold tracking-normal bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent'>V I B E-R O O M </span>
+      </button>
 
       <div className='flex items-center gap-3'>
         {isAdmin && (

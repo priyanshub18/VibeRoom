@@ -7,6 +7,7 @@ import ChatPage from "./pages/ChatPage";
 import AlbumPage from "./pages/AlbumPage";
 import Queue from "./pages/Queue";
 import AdminPage from "./pages/AdminPage";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
           <Route path='/chat' element={<ChatPage />} />
           <Route path='/albums/:albumId' element={<AlbumPage />} />
           <Route path='/queue' element={<Queue />} />
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </>

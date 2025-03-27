@@ -106,15 +106,8 @@ const FriendActivity = () => {
                   p-4 rounded-xl transition-all duration-300 group 
                   hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                   onClick={() => {
-                    if (!isPlaying) {
-                      setSelectedUser(user);
-                      navigate("/chat");
-                    } else {
-                      console.log("Songs: ", songs);
-                      console.log("To change the Song", song);
-                      setSelectedUser(null);
-                      setCurrentSong(song as Song);
-                    }
+                    setSelectedUser(user);
+                    navigate("/chat");
                   }}
                 >
                   <div className='flex items-center gap-4'>

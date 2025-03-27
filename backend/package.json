@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "seed:songs": "node src/seeds/songs.js",
-    "seed:albums" : "node src/seeds/albums.js"
+    "seed:albums": "node src/seeds/albums.js"
   },
   "type": "module",
   "keywords": [],
@@ -20,6 +20,7 @@
     "express": "^4.21.2",
     "express-fileupload": "^1.5.1",
     "mongoose": "^8.12.2",
+    "node-cron": "^3.0.3",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
