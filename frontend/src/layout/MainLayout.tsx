@@ -5,6 +5,7 @@ import PlayBackControls from "@/components/PlayBackControls";
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useIsVibeCheckHiddenStore } from "@/stores/isVibeCheckHidden";
+import { useMusicStore } from "@/stores/useMusicStore";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
