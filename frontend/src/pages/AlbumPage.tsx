@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { AudioWaveform, CalendarClock, Timer, PlayIcon, Divide, Music, Play, AudioLines, Pause } from "lucide-react";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { useShowPlayerStore } from "@/stores/useShowPlayer";
-import { Skeleton } from "@/components/ui/skeleton";
 
 // Expanded Gradient Array with More Complex Gradients
 const gradients = [
@@ -82,41 +81,41 @@ const AlbumPage = () => {
           aria-hidden='true'
         />
         {/* Album Header */}
-        <div className='grid md:grid-cols-[300px_1fr] gap-8 mb-8 relative z-20'>
+        <div className='grid md:grid-cols-[300px_1fr] grid-cols-1 gap-8 mb-8 relative z-20'>
           {/* Album Cover */}
-          <div className='relative group'>
+          <div className='relative group flex justify-center md:block'>
             <img
               src={currentAlbum?.imageUrl}
               alt={currentAlbum?.title}
-              className='w-full aspect-square object-cover rounded-2xl 
+              className='w-full max-w-[300px] md:max-w-none aspect-square object-cover rounded-2xl 
               shadow-[0_0_50px_rgba(255,255,255,0.2)]'
             />
           </div>
 
           {/* Album Details */}
-          <div className='flex flex-col justify-end space-y-4'>
+          <div className='flex flex-col justify-end space-y-4 text-center md:text-left'>
             <div className='text-sm uppercase tracking-widest text-white/70'>Album</div>
-            <h1 className='text-5xl md:text-7xl font-bold text-white leading-tight'>{currentAlbum?.title}</h1>
-            <div className='flex items-center space-x-4 text-white'>
+            <h1 className='text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight'>{currentAlbum?.title}</h1>
+            <div className='flex justify-center md:justify-start items-center space-x-4 text-white flex-wrap'>
               <span className='font-semibold'>{currentAlbum?.artist}</span>
-              <span className='opacity-50'>•</span>
+              <span className='opacity-50 hidden md:inline'>•</span>
               <span>{currentAlbum?.songs.length} Songs</span>
-              <span className='opacity-50'>•</span>
+              <span className='opacity-50 hidden md:inline'>•</span>
               <span>{currentAlbum?.releaseYear}</span>
             </div>
 
             {/* Play Button */}
-            <div className='flex items-center space-x-4'>
+            <div className='flex justify-center md:justify-start items-center space-x-4'>
               <Button
                 onClick={() => handleAlbum()}
                 size='lg'
                 className='group relative overflow-hidden 
                 bg-white text-black hover:bg-white/90 
-                rounded-full px-8 py-4 flex items-center space-x-3
+                rounded-full px-6 md:px-8 py-3 md:py-4 flex items-center space-x-3
                 transition-all duration-500 ease-in-out'
               >
-                {isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? <Pause className='h-7 w-7 text-black' /> : <Play className='h-7 w-7 text-black' />}
-                <span className='font-bold'>{isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? "Pause" : "Play"} Album</span>
+                {isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? <Pause className='h-5 w-5 md:h-7 md:w-7 text-black' /> : <Play className='h-5 w-5 md:h-7 md:w-7 text-black' />}
+                <span className='font-bold text-sm md:text-base'>{isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? "Pause" : "Play"} Album</span>
                 <div
                   className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
                 opacity-0 group-hover:opacity-100 animate-[shimmer_2s_infinite]'
@@ -130,21 +129,21 @@ const AlbumPage = () => {
         <div className='bg-black/40 backdrop-blur-xl rounded-2xl overflow-hidden'>
           {/* Table Header */}
           <div
-            className='grid grid-cols-[auto_1fr_auto_auto] gap-4 px-6 py-4 
+            className='grid grid-cols-[auto_1fr_auto_auto] gap-4 px-4 md:px-6 py-4 
               bg-white/5 text-white/70 font-semibold uppercase tracking-wider sticky top-0 z-10'
           >
             <div className='text-center text-amber-500'>#</div>
             <div className='flex items-center space-x-0.5'>
               <AudioWaveform className='w-5 h-5 text-blue-400' />
-              <span>Track</span>
+              <span className='hidden md:inline'>Track</span>
             </div>
-            <div className='flex items-center space-x-1 -mx-27'>
+            <div className='flex items-center space-x-1 -mx-2 md:-mx-27'>
               <CalendarClock className='w-5 h-5 text-green-400' />
-              <span>Date</span>
+              <span className='hidden md:inline'>Date</span>
             </div>
-            <div className='flex items-center space-x-0.5 -mx-4'>
+            <div className='flex items-center space-x-0.5 -mx-2 md:-mx-4'>
               <Timer className='w-5 h-5 text-red-400' />
-              <span>Runtime</span>
+              <span className='hidden md:inline'>Runtime</span>
             </div>
           </div>
 
@@ -157,36 +156,36 @@ const AlbumPage = () => {
                     <div
                       key={song._id}
                       onClick={() => handlePlaySong(index)}
-                      className='grid grid-cols-[auto_1fr_auto_auto] gap-4 px-6 py-4 
+                      className='grid grid-cols-[auto_1fr_auto_auto] gap-2 md:gap-4 px-4 md:px-6 py-3 md:py-4 
               hover:bg-white/10 transition-colors group cursor-pointer'
                     >
                       {isPlaying && isCurrentSong ? (
-                        <div className='flex items-center justify-center  text-emerald-200 animate-pulse -ml-2.5'>
+                        <div className='flex items-center justify-center text-emerald-200 animate-pulse -ml-2.5'>
                           <AudioLines size={20} strokeWidth={3} />
                         </div>
                       ) : (
                         <>
                           <div className='flex items-center justify-center text-white/70 group-hover:text-white block group-hover:hidden'>{index + 1}</div>
-                          <div className='flex items-center justify-center py-4 text-emerald-200  -ml-3 hidden group-hover:block'>
+                          <div className='flex items-center justify-center py-4 text-emerald-200 -ml-3 hidden group-hover:block'>
                             <Play className='w-4 h-4' strokeWidth={3} />
                           </div>
                         </>
                       )}
 
-                      <div className='flex items-center space-x-4'>
+                      <div className='flex items-center space-x-2 md:space-x-4'>
                         <img
                           src={song.imageUrl}
                           alt={song.title}
-                          className='w-12 h-12 rounded-lg object-cover 
+                          className='w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover 
                   group-hover:scale-110 transition-transform'
                         />
-                        <div>
-                          <div className='font-semibold text-white group-hover:text-blue-300 transition-colors'>{song.title}</div>
-                          <div className='text-white/60 text-sm'>{song.artist}</div>
+                        <div className='overflow-hidden'>
+                          <div className='font-semibold text-white group-hover:text-blue-300 transition-colors truncate max-w-[150px] md:max-w-none'>{song.title}</div>
+                          <div className='text-white/60 text-xs md:text-sm truncate max-w-[150px] md:max-w-none'>{song.artist}</div>
                         </div>
                       </div>
-                      <div className='text-white/70 group-hover:text-white mr-10'>{song.createdAt.split("T")[0]}</div>
-                      <div className='text-white/70 group-hover:text-white'>{formatDuration(song.duration)} min</div>
+                      <div className='text-white/70 group-hover:text-white text-xs md:text-base mr-2 md:mr-10'>{song.createdAt.split("T")[0]}</div>
+                      <div className='text-white/70 group-hover:text-white text-xs md:text-base'>{formatDuration(song.duration)} min</div>
                     </div>
                   );
                 })}
@@ -203,44 +202,3 @@ const AlbumPage = () => {
 };
 
 export default AlbumPage;
-
-// <div className='relative h-screen w-full bg-zinc-950 rounded-3xl'>
-//   {/* Top gradient overlay (Randomized on Reload) */}
-//   <div className={`absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b ${gradients[gradientIndex]} pointer-events-none z-0 transition-all duration-500 rounded-xl`} />
-//
-//   {/* Scrollable content area */}
-//   <ScrollArea className='relative z-10 min-h-full w-full'>
-//     <div className='container mx-auto px-4 py-8'>
-//       {currentAlbum && (
-//         <div className='space-y-6'>
-//           {/* Album Header */}
-//           {/* <div className='flex items-center space-x-6'>
-//             {currentAlbum.coverImage && <img src={currentAlbum.coverImage} alt={currentAlbum.name} className='w-48 h-48 object-cover rounded-lg shadow-xl' />}
-//             <div>
-//               <h1 className='text-4xl font-bold text-white'>{currentAlbum.name}</h1>
-//               <p className='text-zinc-300 text-lg mt-2'>
-//                 {currentAlbum.artist} • {currentAlbum.year}
-//               </p>
-//             </div>
-//           </div> */}
-
-//           {/* Track List */}
-//           {/* <div className='bg-white/10 backdrop-blur-md rounded-lg p-6'>
-//             <h2 className='text-2xl font-semibold text-white mb-4'>Tracks</h2>
-//             <div className='space-y-3'>
-//               {currentAlbum.tracks?.map((track, index) => (
-//                 <div key={track.id} className='flex justify-between items-center text-white/80 hover:bg-white/20 p-3 rounded-md transition-colors'>
-//                   <div className='flex items-center space-x-4'>
-//                     <span className='text-zinc-400'>{index + 1}</span>
-//                     <span>{track.name}</span>
-//                   </div>
-//                   <span className='text-zinc-400'>{track.duration}</span>
-//                 </div>
-//               ))}
-//             </div>
-//           </div> */}
-//         </div>
-//       )}
-//     </div>
-//   </ScrollArea>
-// </div>

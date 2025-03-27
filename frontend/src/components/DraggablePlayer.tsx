@@ -10,8 +10,8 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
 
   const [position, setPosition] = useState(() => {
     const screenWidth = window.innerWidth;
-    const playerWidth = 400;
-    const x = (screenWidth - playerWidth) / 2 - 100;
+    const playerWidth = screenWidth < 640 ? screenWidth - 40 : 400;
+    const x = screenWidth < 640 ? 20 : (screenWidth - playerWidth) / 2 - 100;
     const y = window.innerHeight - 150;
     return { x, y };
   });
@@ -20,8 +20,8 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
   // Memoized resize handler to prevent unnecessary re-renders
   const handleResize = useCallback(() => {
     const screenWidth = window.innerWidth;
-    const playerWidth = 400;
-    const x = (screenWidth - playerWidth) / 2;
+    const playerWidth = screenWidth < 640 ? screenWidth - 40 : 400;
+    const x = screenWidth < 640 ? 20 : (screenWidth - playerWidth) / 2;
     const y = window.innerHeight - 150;
     setPosition({ x, y });
   }, []);
@@ -35,6 +35,9 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
   const handleDragStart = (e: any) => {
     const element = audioRef.current;
     if (!element) return;
+
+    // Disable dragging on mobile
+    if (window.innerWidth < 640) return;
 
     setIsDragging(true);
     const startX = e.clientX - position.x;
@@ -64,39 +67,43 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
   };
 
   if (!isHidden) return null;
+
   return (
     <div
       ref={audioRef}
       className={`
         fixed 
-        bg-black
-
+        bg-black/90
         backdrop-blur-xl 
         text-white 
         rounded-3xl 
         shadow-2xl 
         border border-zinc-700
-        p-4 
+        p-3 sm:p-4
         flex 
         items-center 
-        gap-4 
+        gap-2 sm:gap-4 
         cursor-grab 
         active:cursor-grabbing 
         transition-all 
         duration-300
-        z-[9999]  // Extremely high z-index to ensure it's on top
+        z-[9999]
+        w-[calc(100%-40px)] sm:w-auto
+        max-w-[500px]
+        mx-auto left-5 right-5 sm:left-auto sm:right-auto
         ${isDragging ? "scale-103 shadow-2xl" : "scale-100"}
       `}
       style={{
         left: `${position.x}px`,
         bottom: `${window.innerHeight - position.y - 100}px`,
         transform: isDragging ? "rotate-1" : "rotate-0",
-        willChange: "transform, left, bottom", // Performance optimization
+        willChange: "transform, left, bottom",
       }}
     >
-      {/* Drag Handle */}
+      {/* Drag Handle - Hidden on Mobile */}
       <div
         className='
+          hidden sm:block
           p-2 
           rounded-lg 
           bg-zinc-800 
@@ -119,16 +126,13 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
       </div>
 
       {/* Player Info */}
-      <div className='flex items-center gap-3 w-[200px]'>
-        {" "}
-        {/* Fixed width added */}
+      <div className='flex items-center gap-2 sm:gap-3 w-full sm:w-[200px]'>
         <div className='relative'>
           <img
             src={currentSong?.imageUrl}
             alt='Song Cover'
             className={`
-              w-12 
-              h-12 
+              w-10 h-10 sm:w-12 sm:h-12
               rounded-xl 
               object-cover 
               shadow-md
@@ -142,26 +146,22 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
               absolute 
               bottom-0 
               right-0 
-              w-3 
-              h-3 
+              w-2.5 h-2.5 sm:w-3 sm:h-3
               bg-emerald-500 
               rounded-full 
-              
             '
             ></div>
           )}
         </div>
-        <div className='overflow-hidden'>
-          {" "}
-          {/* Prevent text overflow */}
+        <div className='overflow-hidden flex-grow sm:flex-grow-0'>
           <h3
             className='
             font-semibold 
-            text-sm 
+            text-xs sm:text-sm
             hover:text-emerald-400 
             transition-colors
             truncate 
-            max-w-[150px] 
+            max-w-[100px] sm:max-w-[150px]
             block
             overflow-hidden
             whitespace-nowrap
@@ -171,12 +171,12 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
           </h3>
           <p
             className='
-            text-xs 
+            text-[10px] sm:text-xs
             text-zinc-400 
             hover:text-zinc-200 
             transition-colors
             truncate 
-            max-w-[150px] 
+            max-w-[100px] sm:max-w-[150px]
             block
             overflow-hidden
             whitespace-nowrap
@@ -188,7 +188,7 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
       </div>
 
       {/* Controls */}
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-2 sm:gap-3'>
         <button
           className='
             text-zinc-400 
@@ -196,6 +196,7 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
             transition-colors 
             hover:scale-110
             active:scale-95
+            hidden sm:block
           '
           onClick={playPrevious}
           aria-label='Previous'
@@ -209,7 +210,7 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
             text-white 
             bg-emerald-500 
             rounded-full 
-            p-2 
+            p-1.5 sm:p-2
             hover:bg-emerald-600
             transition-all
             active:scale-90
@@ -217,7 +218,7 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
           `}
           aria-label={isPlaying ? "Pause" : "Play"}
         >
-          {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
         </button>
 
         <button
@@ -227,6 +228,7 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
             transition-colors 
             hover:scale-110
             active:scale-95
+            hidden sm:block
           '
           onClick={playNext}
           aria-label='Next'
@@ -236,44 +238,44 @@ const DraggablePlayer = ({ isHidden, setIsHidden }: { isHidden: boolean; setIsHi
       </div>
 
       {/* Expand Button */}
-      <button
-        className='
-          ml-2 
-          text-zinc-400 
-          hover:text-white 
-          transition-colors 
-          hover:scale-110 
-          active:scale-95
-          bg-zinc-800 
-          rounded-full 
-          p-2
-        '
-        onClick={() => setIsHidden((val) => !val)}
-        aria-label='Expand Controls'
-      >
-        <Maximize2 size={16} />
-      </button>
+      <div className='flex items-center gap-1 sm:gap-2'>
+        <button
+          className='
+            text-zinc-400 
+            hover:text-white 
+            transition-colors 
+            hover:scale-110 
+            active:scale-95
+            bg-zinc-800 
+            rounded-full 
+            p-1.5 sm:p-2
+          '
+          onClick={() => setIsHidden((val) => !val)}
+          aria-label='Expand Controls'
+        >
+          <Maximize2 size={14} />
+        </button>
 
-      <button
-        className='
-
-          text-zinc-400 
-          hover:text-white 
-          transition-colors 
-          hover:scale-110 
-          active:scale-95
-          bg-zinc-800 
-          rounded-full 
-          p-2
-        '
-        onClick={() => {
-          toggleClosePlayer();
-          isPlaying && togglePlay();
-        }}
-        aria-label='Hide Player'
-      >
-        <X size={16} />
-      </button>
+        <button
+          className='
+            text-zinc-400 
+            hover:text-white 
+            transition-colors 
+            hover:scale-110 
+            active:scale-95
+            bg-zinc-800 
+            rounded-full 
+            p-1.5 sm:p-2
+          '
+          onClick={() => {
+            toggleClosePlayer();
+            isPlaying && togglePlay();
+          }}
+          aria-label='Hide Player'
+        >
+          <X size={14} />
+        </button>
+      </div>
     </div>
   );
 };
