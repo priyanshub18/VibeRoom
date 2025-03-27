@@ -22,6 +22,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const token = await getToken();
         updateApiToken(token);
         if (userId) {
+          console.log("Initialising the Server");
           initSocket(userId);
         }
         if (token) {

@@ -4,27 +4,31 @@ export const authCallback = async (req, res) => {
   try {
     const { id, firstName, lastName, imageUrl } = req.body;
 
-    if (!id || !firstName || !lastName || !imageUrl) {
+    if (!id) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
     let user = await User.findOne({ clerkId: id });
 
     if (user) {
+      console.log("If the user already exist in the databse i am checkging right now");
       return res.status(200).json(user); // Changed from 409 to 200 with the user object
     }
-
-    user = await User.findOneAndUpdate(
-      { clerkId: id },
+    console.log("Creating the new user under this: ", id, firstName, lastName);
+    const user2 = await User.findOneAndUpdate(
+      { clerkId: id }, // Find user by clerkId
       {
-        // update or create with these fields
-        fullName: `${firstName || ""} ${lastName || ""}`.trim(),
-        imageUrl: imageUrl,
+        $set: {
+          clerkId: id, // Ensure clerkId is set on insert
+          fullName: `${firstName || ""} ${lastName || ""}`.trim(),
+          imageUrl: imageUrl,
+        },
       },
       {
-        upsert: true, // create if doesn't exist
-        new: true, // return the updated/created document
-        runValidators: true, // run model validators on update
+        upsert: true, // Create if doesn't exist
+        new: true, // Return updated document
+        runValidators: true, // Run model validators
+        setDefaultsOnInsert: true, // Apply default schema values
       }
     );
 

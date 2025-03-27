@@ -18,16 +18,59 @@ const MessageInput = () => {
   };
 
   return (
-    <div className='p-4 bg-black border-t border-zinc-900'>
-      <div className='flex items-center space-x-2 bg-zinc-900 rounded-2xl border border-zinc-800 p-3 shadow-lg hover:shadow-emerald-500/20 transition-all duration-300'>
+    <div
+      className='
+      p-2 sm:p-4 
+      bg-black 
+      border-t border-zinc-900
+    '
+    >
+      <div
+        className='
+        flex items-center 
+        space-x-1 sm:space-x-2 
+        bg-zinc-900 
+        rounded-xl sm:rounded-2xl 
+        border border-zinc-800 
+        p-2 sm:p-3 
+        shadow-lg 
+        hover:shadow-emerald-500/20 
+        transition-all 
+        duration-300
+      '
+      >
         {/* AI Assist Button */}
-        <Button variant='ghost' size='icon' className='text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-400 rounded-full transition-all duration-200'>
-          <Sparkles className='size-6' />
+        <Button
+          variant='ghost'
+          size='icon'
+          className='
+            text-emerald-500 
+            hover:bg-emerald-500/10 
+            hover:text-emerald-400 
+            rounded-full 
+            transition-all 
+            duration-200 
+            size-8 sm:size-10
+          '
+        >
+          <Sparkles className='size-4 sm:size-6' />
         </Button>
 
         {/* Emoji Button */}
-        <Button variant='ghost' size='icon' className='text-zinc-400 hover:bg-emerald-500/10 hover:text-emerald-400 rounded-full transition-all duration-200'>
-          <Smile className='size-6' />
+        <Button
+          variant='ghost'
+          size='icon'
+          className='
+            text-zinc-400 
+            hover:bg-emerald-500/10 
+            hover:text-emerald-400 
+            rounded-full 
+            transition-all 
+            duration-200 
+            size-8 sm:size-10
+          '
+        >
+          <Smile className='size-4 sm:size-6' />
         </Button>
 
         <Input
@@ -40,12 +83,12 @@ const MessageInput = () => {
             focus-visible:ring-0
             focus-visible:outline-none
             text-white
-            text-xl           
+            text-sm sm:text-xl
             placeholder-zinc-500
-            p-2
+            p-1 sm:p-2
             w-full
             flex-grow
-            min-h-[48px]        
+            min-h-[40px] sm:min-h-[48px]
           '
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
@@ -57,17 +100,17 @@ const MessageInput = () => {
           className={`
             ${newMessage.trim() ? "bg-emerald-600 text-white hover:bg-emerald-500 active:bg-emerald-700 shadow-lg shadow-emerald-500/30" : "bg-zinc-800 text-zinc-600 cursor-not-allowed"}
             rounded-full
-            p-2
+            p-1 sm:p-2
             transition-all
             duration-200
             ease-in-out
             flex
             items-center
             justify-center
-            size-12    // Increased button size
+            size-8 sm:size-12
           `}
         >
-          <Send className='size-6' />
+          <Send className='size-4 sm:size-6' />
         </Button>
       </div>
     </div>

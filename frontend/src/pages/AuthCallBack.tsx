@@ -4,6 +4,7 @@ import { Loader } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { axiosInstance } from "@/lib/axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import { customToast } from "@/components/ToastThings/SelfMadeToast";
 
 const AuthCallBack = () => {
   const { isLoaded, user } = useUser();
@@ -25,6 +26,7 @@ const AuthCallBack = () => {
         syncAttempt.current = true;
       } catch (error) {
         console.log("Error in AuthCallBack", error);
+        customToast("Failed to add user to the database. Some app features may not work correctly.", "error");
       } finally {
         navigate("/");
       }

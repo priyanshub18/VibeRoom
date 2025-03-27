@@ -19,16 +19,16 @@ export const getMessages = async (req, res, next) => {
     const myId = req.auth.userId;
     const { userId } = req.params;
 
-    const message = await Message.find({
+    const messages = await Message.find({
       $or: [
-        { sender: myId, receiver: userId },
-        { sender: userId, receiver: myId },
+        { senderId: userId, receiverId: myId },
+        { senderId: myId, receiverId: userId },
       ],
     }).sort({ createdAt: 1 });
-    console.log("Messages: ", message);
+    console.log("Messages: ", messages);
 
     res.status(200).json({
-      messages: message,
+      messages: messages,
     });
   } catch (error) {
     console.error("Error on getting messages: ", error);
